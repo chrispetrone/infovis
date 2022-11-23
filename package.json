@@ -1,0 +1,46 @@
+{
+  "name": "vis",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@mui/material": "^5.10.15",
+    "@observablehq/runtime": "4",
+    "@squisho/colored-map": "https://api.observablehq.com/@squisho/colored-map@173.tgz?v=3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "d3": "^7.6.1",
+    "d3a250c8d2c7502c": "https://api.observablehq.com/d/d3a250c8d2c7502c@166.tgz?v=3",
+    "leaflet": "^1.9.3",
+    "react": "^18.2.0",
+    "react-d3-map-choropleth": "^0.5.1",
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.1.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
