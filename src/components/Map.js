@@ -3,6 +3,8 @@ import { geoJson } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import { ButtonGroup, Button, Box } from "@mui/material";
+
 // import './Map.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,21 +15,22 @@ const Map = () => {
 
     var selected = []
 
-    const [onselect, setOnselect] = useState({});
+    const [onSelect, setOnSelect] = useState({});
+    const [selectedButton, setSelectedButton] = useState("2006");
     /* function determining what should happen onmouseover, this function updates our state*/
     const highlightFeature = (e => {
         var layer = e.target;
         const properties = e.target.feature.properties;
         const areaName = properties['Name_x'];
-        if (selected.includes(areaName)){
-            layer.setStyle({fillColor:'red'})
-            selected.splice(selected.indexOf(areaName));
+        if (selected.includes(areaName)) {
+            layer.setStyle(style(e.target.feature))
+            selected.splice(selected.indexOf(areaName), 1);
         } else {
-
+            const color = "darkblue";
             selected.push(properties['Name_x'])
-            layer.setStyle({fillColor:'green'})
+            layer.setStyle({ fillColor: color })
         }
-        
+
         // layer.setStyle({
         //     fillColor: "#000000",
         //     weight: 1,
@@ -49,7 +52,6 @@ const Map = () => {
         margin: '0'
     }
     const style = (feature => {
-        console.log(selected)
         return ({
             fillColor: getColor(feature.properties['Single-Detached']),
             weight: 1,
@@ -67,23 +69,23 @@ const Map = () => {
         if (d > 1000000) return '#810f7c';
     }
     function yearFilter(feature) {
-        if (feature.properties.year === "2006") return true
+        console.log(selectedButton);
+        if (feature.properties.year === selectedButton) return true
     }
-    /*resets our state i.e no properties should be displayed when a feature is not clicked or hovered over */
-    const resetHighlight = (e => {
-        e.target.resetStyle();
-        // setOnselect({});
-        // e.target.setStyle(style(e.target.feature));
-    })
     const onEachFeature = (feature, layer) => {
         layer.on({
-            //click: (e) => {highlightFeature(e)},
-            click: (e) => {e.target.setStyle({fillColor: 'red'});
-                            highlightFeature(e);
-                            //selected.push(e.target.feature.properties['Name_x']);
-                            console.log(selected);
-                    },
+            click: (e) => {
+                highlightFeature(e);
+                console.log(selected);
+            },
         });
+    }
+
+    function updateYear(year) {
+        console.log(year);
+        setSelectedButton(year);
+        setOnSelect("doookieee")
+        console.log(selectedButton)
     }
 
     return (
@@ -93,13 +95,29 @@ const Map = () => {
                 <p className="text-muted">A choropleth map displaying regional property <br /> assessments across the CRD.  Data collected <br />from the CMHC surveys published over 10 years, <br />in 2006, 2011, and 2016.</p></div>
             <div className="" >
                 <div className="">
-                    {onselect.name && (
+                    {/* {onselect.name && (
                         <ul className="census-info">
                             <li><strong>{onselect.name}</strong></li><br />
                             <li>Value:{onselect.value}</li>
                         </ul>
-                    )}
-                    <MapContainer center={[48.5, -123.5]}
+                    )} */}
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            '& > *': {
+                                m: 1,
+                            },
+                        }}
+                    >
+                        <ButtonGroup variant="text" aria-label="text button group">
+                            <Button color={selectedButton == "2006" ? "secondary" : "primary"} onClick={() => updateYear("2006")}>2006</Button>
+                            <Button color={selectedButton == "2011" ? "secondary" : "primary"} onClick={() => updateYear("2011")}> 2011</Button>
+                            <Button color={selectedButton == "2016" ? "secondary" : "primary"} onClick={() => updateYear("2016")}> 2016</Button>
+                        </ButtonGroup>
+                    </Box>
+                    <MapContainer center={[48.47, -123.5]}
                         zoom={10} scrollWheelZoom={true} style={mapStyle}>
                         <TileLayer
                             attribution="Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
@@ -110,8 +128,8 @@ const Map = () => {
                         )}
                     </MapContainer>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
 
     )
 }
