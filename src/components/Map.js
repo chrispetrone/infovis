@@ -1,3 +1,5 @@
+import { select } from 'd3';
+import { geoJson } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
@@ -9,23 +11,37 @@ let data = require("./newareas.json")
 
 const Map = () => {
 
+    var selected = []
+
     const [onselect, setOnselect] = useState({});
     /* function determining what should happen onmouseover, this function updates our state*/
     const highlightFeature = (e => {
         var layer = e.target;
-        console.log(e);
         const properties = e.target.feature.properties;
-        setOnselect({
-            name: properties['Name_x'],
-            value: properties['Single-Detached'],
-        });
-        layer.setStyle({
-            weight: 1,
-            color: "black",
-            fillColor: "black",
-            fillOpacity: 1
-        });
-    });
+        const areaName = properties['Name_x'];
+        if (selected.includes(areaName)){
+            layer.setStyle({fillColor:'red'})
+            selected.splice(selected.indexOf(areaName));
+        } else {
+
+            selected.push(properties['Name_x'])
+            layer.setStyle({fillColor:'green'})
+        }
+        
+        // layer.setStyle({
+        //     fillColor: "#000000",
+        //     weight: 1,
+        //     opacity: 1,
+        //     color: 'white',
+        //     dashArray: '2',
+        //     fillOpacity: 0.7
+        // });
+        // setOnselect({
+        //     names: selected.push(properties['Name_x']),
+        //     //value: properties['Single-Detached'],
+        // });
+        // layer.bringToFront();
+    })
 
     const mapStyle = {
         height: '60vh',
@@ -33,6 +49,7 @@ const Map = () => {
         margin: '0'
     }
     const style = (feature => {
+        console.log(selected)
         return ({
             fillColor: getColor(feature.properties['Single-Detached']),
             weight: 1,
@@ -54,13 +71,18 @@ const Map = () => {
     }
     /*resets our state i.e no properties should be displayed when a feature is not clicked or hovered over */
     const resetHighlight = (e => {
-        setOnselect({});
-        e.target.setStyle(style(e.target.feature));
+        e.target.resetStyle();
+        // setOnselect({});
+        // e.target.setStyle(style(e.target.feature));
     })
     const onEachFeature = (feature, layer) => {
         layer.on({
-            "click": highlightFeature,
-            // mouseout: resetHighlight,
+            //click: (e) => {highlightFeature(e)},
+            click: (e) => {e.target.setStyle({fillColor: 'red'});
+                            highlightFeature(e);
+                            //selected.push(e.target.feature.properties['Name_x']);
+                            console.log(selected);
+                    },
         });
     }
 
