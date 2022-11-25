@@ -22,7 +22,7 @@ const Map = () => {
         const properties = e.target.feature.properties;
         const areaName = properties['Name_x'];
         if (selected.includes(areaName)) {
-            var newArr = [...selected].filter(function(e) {return e !== areaName});
+            var newArr = [...selected].filter(function (e) { return e !== areaName });
             setSelected(newArr)
             selected.splice(selected.indexOf(areaName), 1);
         } else {
@@ -32,7 +32,7 @@ const Map = () => {
     })
 
     const mapStyle = {
-        height: '60vh',
+        height: '80vh',
         width: '100%',
         margin: '0'
     }
@@ -107,16 +107,19 @@ const Map = () => {
                             <Button color={selectedButton == "2016" ? "secondary" : "primary"} onClick={() => updateYear("2016")}> 2016</Button>
                         </ButtonGroup>
                     </Box>
-                    <MapContainer center={[48.47, -123.5]}
+                    <MapContainer center={[48.47, -123.5]} attributionControl={false}
                         zoom={10} scrollWheelZoom={true} style={mapStyle}>
                         <TileLayer
+                            style={{ zIndex: 1 }}
                             attribution="Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
                             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
                         />
                         {data && (
                             <GeoJSON key={selectedButton} data={mapData} style={style} onEachFeature={onEachFeature} />
                         )}
-                        <Legend key={selectedButton + "a"} data={data} />
+                        <Box>
+                            <Legend key={selectedButton + "a"} data={data} style={{ zIndex: 2 }} />
+                        </Box>
                     </MapContainer>
                 </div>
             </div >

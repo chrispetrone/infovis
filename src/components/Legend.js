@@ -1,7 +1,7 @@
 import { MapControl, withLeaflet } from "react-leaflet";
 import L from "leaflet";
 import { useEffect } from "react";
-import { Control } from "react-leaflet";
+import Control from "react-leaflet-custom-control";
 import './Legend.css';
 
 function Legend({ data }) {
@@ -24,14 +24,16 @@ function Legend({ data }) {
     })
 
     return (
-        <div className="info legend">
-            <table>
-                <tbody>
-                    {legend}
-                </tbody>
-            </table>
-            <span id="legend-title"></span>
-        </div>
+        <Control position="bottomright">
+            <div className="info legend">
+                <table>
+                    <tbody>
+                        {legend}
+                    </tbody>
+                </table>
+                <span id="legend-title"></span>
+            </div>
+        </Control>
     )
 
 }

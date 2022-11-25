@@ -3,6 +3,8 @@ import './App.css';
 import Map from './components/Map';
 import { Grid } from '@mui/material';
 
+import Legend from './components/Legend';
+
 const App = () => {
 
   return (
@@ -10,8 +12,8 @@ const App = () => {
       <Grid container spacing={2}
         direction="row"
         justifyContent="flex-start"
-        alignItems="flex-start">
-        <Grid item xs={6}>
+        alignItems="flex-end">
+        <Grid item xs={5}>
           <Map />
         </Grid>
       </Grid>
