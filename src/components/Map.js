@@ -13,38 +13,22 @@ let data = require("./newareas.json")
 
 const Map = () => {
 
-    var selected = []
-
-    const [onSelect, setOnSelect] = useState({});
+    const [selected, setSelected] = useState([]);
     const [selectedButton, setSelectedButton] = useState("2006");
-
+    console.log("selected:", selected);
     /* function determining what should happen onmouseover, this function updates our state*/
     const highlightFeature = (e => {
         var layer = e.target;
         const properties = e.target.feature.properties;
         const areaName = properties['Name_x'];
         if (selected.includes(areaName)) {
-            layer.setStyle(style(e.target.feature))
+            var newArr = [...selected].filter(function(e) {return e !== areaName});
+            setSelected(newArr)
             selected.splice(selected.indexOf(areaName), 1);
         } else {
-            const color = "darkblue";
+            setSelected([...selected, properties['Name_x']])
             selected.push(properties['Name_x'])
-            layer.setStyle({ fillColor: color })
         }
-
-        // layer.setStyle({
-        //     fillColor: "#000000",
-        //     weight: 1,
-        //     opacity: 1,
-        //     color: 'white',
-        //     dashArray: '2',
-        //     fillOpacity: 0.7
-        // });
-        // setOnselect({
-        //     names: selected.push(properties['Name_x']),
-        //     //value: properties['Single-Detached'],
-        // });
-        // layer.bringToFront();
     })
 
     const mapStyle = {
@@ -54,7 +38,7 @@ const Map = () => {
     }
     const style = (feature => {
         return ({
-            fillColor: getColor(feature.properties['Single-Detached']),
+            fillColor: getColor(feature.properties),
             weight: 1,
             opacity: 1,
             color: 'white',
@@ -62,7 +46,13 @@ const Map = () => {
             fillOpacity: 0.7
         });
     });
-    function getColor(d) {
+    function getColor(properties) {
+        const areaName = properties['Name_x']
+        const selectedAreas = [...selected]
+        if (selectedAreas.includes(areaName)) {
+            return '#000000'
+        }
+        const d = properties['Single-Detached']
         if (d < 400000) return '#edf8fb';
         if (d < 600000) return '#b3cde3';
         if (d < 800000) return '#8c96c6';
