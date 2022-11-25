@@ -1,10 +1,9 @@
 import React from 'react';
 import './App.css';
 import Map from './components/Map';
-import Legend from './components/Legend';
 import { Grid } from '@mui/material';
 
-const App = () => {  
+const App = () => {
 
   return (
     <div className='container'>

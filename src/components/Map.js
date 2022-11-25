@@ -2,9 +2,9 @@ import { select } from 'd3';
 import { geoJson } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import React, { useState } from 'react';
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet';
 import { ButtonGroup, Button, Box } from "@mui/material";
-
+import Legend from './Legend.js';
 // import './Map.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -17,6 +17,7 @@ const Map = () => {
 
     const [onSelect, setOnSelect] = useState({});
     const [selectedButton, setSelectedButton] = useState("2006");
+
     /* function determining what should happen onmouseover, this function updates our state*/
     const highlightFeature = (e => {
         var layer = e.target;
@@ -66,26 +67,25 @@ const Map = () => {
         if (d < 600000) return '#b3cde3';
         if (d < 800000) return '#8c96c6';
         if (d < 1000000) return '#8856a7';
-        if (d > 1000000) return '#810f7c';
+        if (d < 1200000) return '#810f7c';
+        return '#8f1f8c';
     }
-    function yearFilter(feature) {
-        console.log(selectedButton);
-        if (feature.properties.year === selectedButton) return true
+
+    var mapData = yearFilter(data)
+    function yearFilter(arr) {
+        const items = arr.filter(item => item.properties.year === selectedButton);
+        return items
     }
     const onEachFeature = (feature, layer) => {
         layer.on({
             click: (e) => {
                 highlightFeature(e);
-                console.log(selected);
             },
         });
     }
 
     function updateYear(year) {
-        console.log(year);
         setSelectedButton(year);
-        setOnSelect("doookieee")
-        console.log(selectedButton)
     }
 
     return (
@@ -124,8 +124,9 @@ const Map = () => {
                             url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
                         />
                         {data && (
-                            <GeoJSON data={data} style={style} filter={yearFilter} onEachFeature={onEachFeature} />
+                            <GeoJSON key={selectedButton} data={mapData} style={style} onEachFeature={onEachFeature} />
                         )}
+                        <Legend key={selectedButton + "a"} data={data} />
                     </MapContainer>
                 </div>
             </div >
