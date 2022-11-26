@@ -5,20 +5,23 @@ import React, { useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet';
 import { ButtonGroup, Button, Box } from "@mui/material";
 import Legend from './Legend.js';
+import SmallMultiples from './SmallMultiples';
+
 // import './Map.css';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
 let data = require("./newareas.json")
 
 
-const Map = () => {
+const Map = ({selected, setSelected, selectedButton, setSelectedButton}) => {
 
-    const [selected, setSelected] = useState([]);
-    const [selectedButton, setSelectedButton] = useState("2006");
-    console.log("selected:", selected);
-    /* function determining what should happen onmouseover, this function updates our state*/
+    //const [selected, setSelected] = useState([]);
+    // const [selectedButton, setSelectedButton] = useState("2006");
+    // console.log("selected:", selected);
+
+
     const highlightFeature = (e => {
-        var layer = e.target;
+        // var layer = e.target;
         const properties = e.target.feature.properties;
         const areaName = properties['Name_x'];
         if (selected.includes(areaName)) {
