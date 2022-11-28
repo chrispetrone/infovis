@@ -89,6 +89,8 @@ function toInt(x){
 
 
 
+var legendX = 600
+var legendY = 100
 newData.map((d) => {
     const neighbourhood = d.Neighbourhood
     const color = selectedColors[neighbourhood]
@@ -100,6 +102,11 @@ newData.map((d) => {
         .attr('stroke-width', 5)
         .attr('fill', 'none')
         .attr("transform", `translate(60, ${margin.top})`)
+
+        svg.append("circle").attr("cx",legendX).attr("cy",legendY).attr("r", 6).style("fill", color)
+        svg.append("text").attr("x", legendX + 20).attr("y", legendY).text(neighbourhood).style("font-size", "15px").attr("alignment-baseline","middle")
+        legendX = legendX
+        legendY = legendY +  20
     }})
 
 
