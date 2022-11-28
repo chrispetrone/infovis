@@ -40,7 +40,7 @@ const Map = ({
 
     const mapStyle = {
         height: '80vh',
-        width: '100%',
+        width: '95%',
         margin: '0'
     }
     const style = (feature => {
@@ -50,7 +50,7 @@ const Map = ({
             opacity: 1,
             color: 'white',
             dashArray: '2',
-            fillOpacity: 0.7
+            fillOpacity: 0.7,
         });
     });
     function getSelectedColor() {
@@ -112,10 +112,25 @@ const Map = ({
         <div className='container'>
             <div className="header" >
                 <h2 className='heading'>Regional Property Values in the CRD</h2>
-                <p className="text-muted">A choropleth map displaying regional property <br /> assessments across the CRD.  Data collected <br />from the CMHC surveys published over 10 years, <br />in 2006, 2011, and 2016.</p>
+                <p className="text-muted">A choropleth map displaying regional property assessments across the CRD.  Data collected <br />from the CMHC surveys published over 10 years, in 2006, 2011, and 2016.</p>
             </div>
             <div className="" >
                 <div className="">
+                    <MapContainer center={[48.47, -123.5]} attributionControl={false}
+                        zoom={10} scrollWheelZoom={true} style={mapStyle}>
+                        <TileLayer
+                            style={{ zIndex: 1 }}
+                            attribution="Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
+                            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
+                        />
+                        {data && (
+                            <GeoJSON key={selectedButton} data={mapData} style={style} onEachFeature={onEachFeature} />
+                        )}
+                        <Box>
+                            <Legend key={selectedButton + "a"} data={data} style={{ zIndex: 2 }} />
+                        </Box>
+                    </MapContainer>
+                    
                     <Box
                         sx={{
                             display: 'flex',
@@ -132,20 +147,6 @@ const Map = ({
                             <Button color={selectedButton == "2016" ? "secondary" : "primary"} onClick={() => updateYear("2016")}> 2016</Button>
                         </ButtonGroup>
                     </Box>
-                    <MapContainer center={[48.47, -123.5]} attributionControl={false}
-                        zoom={10} scrollWheelZoom={true} style={mapStyle}>
-                        <TileLayer
-                            style={{ zIndex: 1 }}
-                            attribution="Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL."
-                            url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
-                        />
-                        {data && (
-                            <GeoJSON key={selectedButton} data={mapData} style={style} onEachFeature={onEachFeature} />
-                        )}
-                        <Box>
-                            <Legend key={selectedButton + "a"} data={data} style={{ zIndex: 2 }} />
-                        </Box>
-                    </MapContainer>
                 </div>
             </div >
         </div >

@@ -19,7 +19,7 @@ const App = () => {
       <Grid container spacing={2}
         direction="row"
         justifyContent="flex-start">
-        <Grid item xs={5}
+        <Grid style={{paddingLeft: "50px"}}  item xs={5}
         alignItems="flex-end">
           <Map selected = {selected} setSelected={setSelected} 
           selectedButton={selectedButton} setSelectedButton = {setSelectedButton}
