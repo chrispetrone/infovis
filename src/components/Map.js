@@ -3,7 +3,7 @@ import { geoJson } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import React, { useState } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet';
-import { ButtonGroup, Button, Box } from "@mui/material";
+import { ButtonGroup, Button, Box, useColorScheme } from "@mui/material";
 import Legend from './Legend.js';
 import SmallMultiples from './SmallMultiples';
 
@@ -13,24 +13,28 @@ import SmallMultiples from './SmallMultiples';
 let data = require("./newareas.json")
 
 
-const Map = ({selected, setSelected, selectedButton, setSelectedButton}) => {
+const Map = ({
+    selected, setSelected, 
+    selectedButton, setSelectedButton,
+    selectedColors,setSelectedColors }) => {
 
-    //const [selected, setSelected] = useState([]);
-    // const [selectedButton, setSelectedButton] = useState("2006");
-    // console.log("selected:", selected);
 
 
     const highlightFeature = (e => {
-        // var layer = e.target;
         const properties = e.target.feature.properties;
         const areaName = properties['Name_x'];
         if (selected.includes(areaName)) {
             var newArr = [...selected].filter(function (e) { return e !== areaName });
             setSelected(newArr)
             selected.splice(selected.indexOf(areaName), 1);
+            delete selectedColors[areaName]
+            setSelectedColors(selectedColors)
         } else {
             setSelected([...selected, properties['Name_x']])
             selected.push(properties['Name_x'])
+
+            selectedColors[areaName] = getSelectedColor()
+            setSelectedColors(selectedColors)
         }
     })
 
@@ -49,11 +53,34 @@ const Map = ({selected, setSelected, selectedButton, setSelectedButton}) => {
             fillOpacity: 0.7
         });
     });
+    function getSelectedColor() {
+        const selectedColorList = [
+            '#b2df8a',
+            '#fb9a99',
+            '#fdbf6f',
+            '#e31a1c',
+            '#33a02c',
+            '#ff7f00',
+            '#cab2d6',
+            '#6a3d9a',
+            '#ffff99',            
+            '#a6cee3',
+            '#1f78b4',
+        ]  
+        
+        const usedColors = Object.values(selectedColors)
+        for (const item of selectedColorList){
+            if (!usedColors.includes(item)){
+                return item
+            }
+        }
+        return("FFFFFF")
+    } 
     function getColor(properties) {
         const areaName = properties['Name_x']
         const selectedAreas = [...selected]
         if (selectedAreas.includes(areaName)) {
-            return '#000000'
+            return selectedColors[areaName]
         }
         const d = properties['Single-Detached']
         if (d < 400000) return '#edf8fb';
@@ -83,17 +110,12 @@ const Map = ({selected, setSelected, selectedButton, setSelectedButton}) => {
 
     return (
         <div className='container'>
-            <div className="header">
+            <div className="header" >
                 <h2 className='heading'>Regional Property Values in the CRD</h2>
-                <p className="text-muted">A choropleth map displaying regional property <br /> assessments across the CRD.  Data collected <br />from the CMHC surveys published over 10 years, <br />in 2006, 2011, and 2016.</p></div>
+                <p className="text-muted">A choropleth map displaying regional property <br /> assessments across the CRD.  Data collected <br />from the CMHC surveys published over 10 years, <br />in 2006, 2011, and 2016.</p>
+            </div>
             <div className="" >
                 <div className="">
-                    {/* {onselect.name && (
-                        <ul className="census-info">
-                            <li><strong>{onselect.name}</strong></li><br />
-                            <li>Value:{onselect.value}</li>
-                        </ul>
-                    )} */}
                     <Box
                         sx={{
                             display: 'flex',

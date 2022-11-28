@@ -1,0 +1,38 @@
+[
+    {
+        "Oak Bay": {
+            "Single-Detached":[
+                {"year": 2006, "value": 400000},
+                {"year": 2011, "value": 650000},
+                {"year": 2016, "value": 1000000}
+            ]},
+        
+        "Saanich/Central Saanich":{
+            "Single-Detached":[
+                {"year": 2006, "value": 200000},
+                {"year": 2011, "value": 250000},
+                {"year": 2016, "value": 550000}
+            ]},
+        
+            "Langford/Vw Royal/Colwood/Sooke":{
+                "Single-Detached":[
+                    {"year": 2006, "value": 150000},
+                    {"year": 2011, "value": 200000},
+                    {"year": 2016, "value": 225000}
+                ]},
+    
+            "Esquimalt":{
+                "Single-Detached":[
+                    {"year": 2006, "value": 250000},
+                    {"year": 2011, "value": 250000},
+                    {"year": 2016, "value": 300000}
+                ]},
+
+            "North Saanich":{
+                "Single-Detached":[
+                    {"year": 2006, "value": 100000},
+                    {"year": 2011, "value": 350000},
+                    {"year": 2016, "value": 750000}
+                ]}
+    }
+]

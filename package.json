@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@weknow/react-bubble-chart-d3": "^1.0.12",
     "d3": "^7.6.1",
     "d3a250c8d2c7502c": "https://api.observablehq.com/d/d3a250c8d2c7502c@166.tgz?v=3",
     "leaflet": "^1.9.3",

@@ -5,8 +5,8 @@ export default function SmallMultiples(
   {
     rows = 7,
     cols = 2,
-    width = 1200,
-    height = 500,
+    width = 800,
+    height = 750,
     margin = { top: 20, bottom: 20, left: 40, right: 20 },
     visWidth = width - margin.left - margin.right,
     visHeight = height - margin.top - margin.bottom
