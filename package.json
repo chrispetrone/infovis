@@ -1,6 +1,7 @@
 {
   "name": "vis",
   "version": "0.1.0",
+  "homepage": "https://squisho.github.io/infovis",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
