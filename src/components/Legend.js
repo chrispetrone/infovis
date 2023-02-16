@@ -1,6 +1,3 @@
-import { MapControl, withLeaflet } from "react-leaflet";
-import L from "leaflet";
-import { useEffect } from "react";
 import Control from "react-leaflet-custom-control";
 import './Legend.css';
 

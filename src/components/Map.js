@@ -1,22 +1,18 @@
-import { select } from 'd3';
-import { geoJson } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import React, { useState } from 'react';
+import React from 'react';
 import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet';
 import { ButtonGroup, Button, Box, useColorScheme } from "@mui/material";
 import Legend from './Legend.js';
-import SmallMultiples from './SmallMultiples';
 
-// import './Map.css';
-//import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 let data = require("./newareas.json")
 
 
 const Map = ({
-    selected, setSelected, 
+    selected, setSelected,
     selectedButton, setSelectedButton,
-    selectedColors,setSelectedColors }) => {
+    selectedColors, setSelectedColors }) => {
 
 
 
@@ -63,19 +59,19 @@ const Map = ({
             '#ff7f00',
             '#cab2d6',
             '#6a3d9a',
-            '#ffff99',            
+            '#ffff99',
             '#a6cee3',
             '#1f78b4',
-        ]  
-        
+        ]
+
         const usedColors = Object.values(selectedColors)
-        for (const item of selectedColorList){
-            if (!usedColors.includes(item)){
+        for (const item of selectedColorList) {
+            if (!usedColors.includes(item)) {
                 return item
             }
         }
-        return("FFFFFF")
-    } 
+        return ("FFFFFF")
+    }
     function getColor(properties) {
         const areaName = properties['Name_x']
         const selectedAreas = [...selected]
@@ -130,7 +126,7 @@ const Map = ({
                             <Legend key={selectedButton + "a"} data={data} style={{ zIndex: 2 }} />
                         </Box>
                     </MapContainer>
-                    
+
                     <Box
                         sx={{
                             display: 'flex',
@@ -142,9 +138,9 @@ const Map = ({
                         }}
                     >
                         <ButtonGroup variant="text" aria-label="text button group">
-                            <Button color={selectedButton == "2006" ? "secondary" : "primary"} onClick={() => updateYear("2006")}>2006</Button>
-                            <Button color={selectedButton == "2011" ? "secondary" : "primary"} onClick={() => updateYear("2011")}> 2011</Button>
-                            <Button color={selectedButton == "2016" ? "secondary" : "primary"} onClick={() => updateYear("2016")}> 2016</Button>
+                            <Button color={selectedButton === "2006" ? "secondary" : "primary"} onClick={() => updateYear("2006")}>2006</Button>
+                            <Button color={selectedButton === "2011" ? "secondary" : "primary"} onClick={() => updateYear("2011")}> 2011</Button>
+                            <Button color={selectedButton === "2016" ? "secondary" : "primary"} onClick={() => updateYear("2016")}> 2016</Button>
                         </ButtonGroup>
                     </Box>
                 </div>
