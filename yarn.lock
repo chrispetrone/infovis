@@ -4398,11 +4398,6 @@
     "d3-transition" "3"
     "d3-zoom" "3"
 
-"d3a250c8d2c7502c@https://api.observablehq.com/d/d3a250c8d2c7502c@166.tgz?v=3":
-  "integrity" "sha512-DS8jT7EgdUnb5I3+lN3xG4826ntDuD4I7rge+t3u8mfJokMomBt9gLGm90OesM/wxbM71VEQ6yeBiIfcgavL+A=="
-  "resolved" "https://api.observablehq.com/d/d3a250c8d2c7502c@166.tgz?v=3"
-  "version" "166.0.0"
-
 "damerau-levenshtein@^1.0.8":
   "integrity" "sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA=="
   "resolved" "https://registry.npmjs.org/damerau-levenshtein/-/damerau-levenshtein-1.0.8.tgz"
